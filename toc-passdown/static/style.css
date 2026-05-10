@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Arial;
+    background: url("/static/san-bg.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* HEADER */
+header {
+    background: rgba(0,59,92,0.9);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pdf-btn {
+    background: #0077a3;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+/* MAIN */
+main {
+    max-width: 1100px;
+    margin: 25px auto;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.95);
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+form {
+    display: grid;
+    gap: 10px;
+}
+
+input, select, textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* ✅ FIX SUBMIT BUTTON COLOR */
+.submit-btn {
+    background: #0077a3;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #005f82;
+}
+
+/* ENTRY CARD */
+.entry-card {
+    display: grid;
+    grid-template-columns: 90px 1fr 50px;
+    gap: 12px;
+    align-items: start;
+
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* LEFT BORDER BY PRIORITY */
+.entry-card.fyi { border-left: 6px solid #2bb673; }
+.entry-card.low { border-left: 6px solid #7b8794; }
+.entry-card.medium { border-left: 6px solid #2d9cdb; }
+.entry-card.high { border-left: 6px solid #f59e0b; }
+.entry-card.urgent { border-left: 6px solid #d64545; }
+
+/* ✅ PRIORITY BADGE COLORS (FIXED) */
+.priority-badge {
+    text-align: center;
+    padding: 6px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+}
+
+/* MATCH COLORS */
+.priority-badge.fyi { background: #2bb673; }
+.priority-badge.low { background: #7b8794; }
+.priority-badge.medium { background: #2d9cdb; }
+.priority-badge.high { background: #f59e0b; }
+.priority-badge.urgent { background: #d64545; }
+
+/* CONTENT */
+.entry-content h3 {
+    margin: 4px 0;
+    font-size: 16px;
+}
+
+.notes {
+    margin: 4px 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* STATUS */
+.status-ongoing { color: #f59e0b; font-weight: bold; }
+.status-resolved { color: #2bb673; font-weight: bold; }
+
+/* ACTION BUTTONS (VERTICAL + SPACING FIXED) */
+.entry-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.entry-actions button {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: none;
+    background: #0077a3;
+    color: white;
+    cursor: pointer;
+}
+
+.entry-actions button:hover {
+    background: #005f82;
+}
+
+/* FOOTER */
+.entry-footer {
+    grid-column: 1 / 4;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 6px;
+    color: #555;
+}
+
+/* EDIT SECTION */
+.entry-edit {
+    grid-column: 1 / 4;
+    margin-top: 10px;
+}
