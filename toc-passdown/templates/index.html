@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOC Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Terminal Operations Passdown Dashboard</h1>
+    <a class="pdf-btn" href="/generate-pdf">Generate Passdown PDF</a>
+</header>
+
+<main>
+
+<section class="card">
+<h2>Add Entry</h2>
+
+<form action="/add" method="POST">
+
+<select name="terminal" required>
+<option value="">Select Area</option>
+<option>Terminal 1</option>
+<option>Terminal 2</option>
+<option>Curbside</option>
+<option>Airside</option>
+</select>
+
+<select name="category">
+<option value="">Select Category</option>
+<option>Maintenance</option>
+<option>Security</option>
+<option>Wildlife</option>
+<option>Custodial</option>
+<option>Passenger Impact</option>
+<option>Other</option>
+</select>
+
+<input name="title" placeholder="Title">
+
+<select name="priority">
+<option value="">Select Priority</option>
+<option>FYI</option>
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+<option>Urgent</option>
+</select>
+
+<select name="status">
+<option value="">Select Status</option>
+<option>Ongoing</option>
+<option>Resolved</option>
+</select>
+
+<select name="submitted_by" required>
+<option value="">Select Submitter</option>
+<option>R.Reed</option>
+<option>I.Martinez-Kaldani</option>
+</select>
+
+<textarea name="notes" placeholder="Notes"></textarea>
+
+<button type="submit" class="submit-btn">Submit</button>
+
+</form>
+</section>
+
+<section class="card">
+<h2>Current Entries</h2>
+
+{% for entry in entries %}
+<div class="entry-card {{ entry['priority'].lower() }}">
+
+<!-- PRIORITY -->
+<div class="priority-badge {{ entry['priority'].lower() }}">
+{{ entry["priority"] }}
+</div>
+
+<!-- CONTENT -->
+<div class="entry-content">
+<strong>{{ entry["terminal"] }}</strong>
+<h3>{{ entry["title"] }}</h3>
+<p class="notes">{{ entry["notes"] }}</p>
+
+<span class="status-{{ entry['status'].lower() }}">
+{{ entry["status"] }}
+</span>
+</div>
+
+<!-- ACTIONS -->
+<div class="entry-actions">
+<button type="button" class="edit-btn" data-id="{{ entry['id'] }}">✏️</button>
+
+<form action="/delete/{{ entry['id'] }}" method="POST">
+<button type="submit">🗑️</button>
+</form>
+</div>
+
+<!-- FOOTER -->
+<div class="entry-footer">
+Submitted by: {{ entry["submitted_by"] }} | Last modified: {{ entry["updated_at"] }}
+</div>
+
+<!-- ✅ EDIT FORM (FIXED — THIS WAS MISSING) -->
+<div id="edit-{{ entry['id'] }}" class="entry-edit" style="display:none;">
+<form action="/edit/{{ entry['id'] }}" method="POST">
+
+<input name="title" value="{{ entry['title'] }}">
+
+<select name="terminal">
+<option {% if entry["terminal"] == "Terminal 1" %}selected{% endif %}>Terminal 1</option>
+<option {% if entry["terminal"] == "Terminal 2" %}selected{% endif %}>Terminal 2</option>
+<option {% if entry["terminal"] == "Curbside" %}selected{% endif %}>Curbside</option>
+<option {% if entry["terminal"] == "Airside" %}selected{% endif %}>Airside</option>
+</select>
+
+<select name="category">
+<option {% if entry["category"] == "Maintenance" %}selected{% endif %}>Maintenance</option>
+<option {% if entry["category"] == "Security" %}selected{% endif %}>Security</option>
+<option {% if entry["category"] == "Wildlife" %}selected{% endif %}>Wildlife</option>
+<option {% if entry["category"] == "Custodial" %}selected{% endif %}>Custodial</option>
+<option {% if entry["category"] == "Passenger Impact" %}selected{% endif %}>Passenger Impact</option>
+<option {% if entry["category"] == "Other" %}selected{% endif %}>Other</option>
+</select>
+
+<select name="priority">
+<option {% if entry["priority"] == "FYI" %}selected{% endif %}>FYI</option>
+<option {% if entry["priority"] == "Low" %}selected{% endif %}>Low</option>
+<option {% if entry["priority"] == "Medium" %}selected{% endif %}>Medium</option>
+<option {% if entry["priority"] == "High" %}selected{% endif %}>High</option>
+<option {% if entry["priority"] == "Urgent" %}selected{% endif %}>Urgent</option>
+</select>
+
+<select name="status">
+<option {% if entry["status"] == "Ongoing" %}selected{% endif %}>Ongoing</option>
+<option {% if entry["status"] == "Resolved" %}selected{% endif %}>Resolved</option>
+</select>
+
+<select name="submitted_by">
+<option {% if entry["submitted_by"] == "R.Reed" %}selected{% endif %}>R.Reed</option>
+<option {% if entry["submitted_by"] == "I.Martinez-Kaldani" %}selected{% endif %}>I.Martinez-Kaldani</option>
+</select>
+
+<textarea name="notes">{{ entry["notes"] }}</textarea>
+
+<button type="submit">Save</button>
+
+</form>
+</div>
+
+</div>
+{% endfor %}
+
+</section>
+
+</main>
+
+<script>
+document.querySelectorAll(".edit-btn").forEach(button => {
+    button.addEventListener("click", function () {
+        const id = this.dataset.id;
+        const box = document.getElementById("edit-" + id);
+        box.style.display = box.style.display === "none" ? "block" : "none";
+    });
+});
+</script>
+
+</body>
+</html>
