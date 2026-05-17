@@ -9,7 +9,6 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 import os
 
 app = Flask(__name__)
-tz = pytz.timezone("America/Los_Angeles")
 
 # ✅ CONNECT TO POSTGRES
 def get_db():
@@ -80,7 +79,8 @@ def add():
     conn = get_db()
     cur = conn.cursor()
 
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    tz = pytz.timezone("America/Los_Angeles")
+    now = datetime.now(tz).strftime("%Y-%m-%d %H:%M")
 
     cur.execute("""
         INSERT INTO entries
