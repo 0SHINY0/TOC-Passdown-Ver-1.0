@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, send_file
 from datetime import datetime
+import pytz
 import psycopg2
 import psycopg2.extras
 from reportlab.lib.pagesizes import letter
@@ -8,6 +9,7 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 import os
 
 app = Flask(__name__)
+tz = pytz.timezone("America/Los_Angeles")
 
 # ✅ CONNECT TO POSTGRES
 def get_db():
