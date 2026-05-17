@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial; padding: 20px; }
+
+h1 { border-bottom: 2px solid #0077a3; }
+
+.entry {
+    border-left: 5px solid #0077a3;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.high { border-color: orange; }
+.urgent { border-color: red; }
+</style>
+</head>
+
+<body>
+
+<h1>TOC Passdown - {{ date }}</h1>
+
+{% for entry in entries %}
+<div class="entry {{ entry.priority.lower() }}">
+    <strong>{{ entry.terminal }}</strong> - {{ entry.priority }}<br>
+    <b>{{ entry.title }}</b><br>
+    {{ entry.notes }}
+</div>
+{% endfor %}
+
+</body>
+</html>

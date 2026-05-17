@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Archives</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+    <a href="/">← Back to Main Page</a>
+
+    <form method="GET" style="display:flex; gap:10px;">
+        <input name="search" placeholder="Search archived entries...">
+
+        <select name="terminal">
+            <option value="">All Areas</option>
+            <option>Terminal 1</option>
+            <option>Terminal 2</option>
+            <option>Curbside</option>
+            <option>Airside</option>
+        </select>
+
+        <select name="priority">
+            <option value="">All Priority</option>
+            <option>FYI</option>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Urgent</option>
+        </select>
+
+        <select name="date">
+            <option value="">All Time</option>
+            <option value="7">Last 7 Days</option>
+            <option value="30">Last 30 Days</option>
+            <option value="90">Last 90 Days</option>
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+</header>
+
+<main>
+<section class="card">
+    <h2>Archived Entries</h2>
+
+    {% for entry in entries %}
+   <div class="entry-card {{ entry['priority']|lower if entry['priority'] else '' }} archive-card">
+
+    <div class="priority-badge {{ entry['priority']|lower if entry['priority'] else '' }}">
+        {{ entry["priority"] }}
+    </div>
+
+    <div class="entry-content">
+        <h3>{{ entry["terminal"] }}</h3>
+        <p>{{ entry["title"] }}</p>
+        <p class="notes">{{ entry["notes"] }}</p>
+    </div>
+
+    <div class="entry-actions">
+        <form action="/restore/{{ entry['id'] }}" method="POST">
+            <button type="submit" class="restore-btn">♻️</button>
+        </form>
+    </div>
+
+    <div class="entry-footer">
+        Submitted by: {{ entry["submitted_by"] or "N/A" }} |
+        {{ entry["created_at"] }}
+    </div>
+
+</div>
+    {% endfor %}
+
+</section>
+</main>
+
+</body>
+</html>
